@@ -1,7 +1,7 @@
 {
-  "name": "ReactPWA",
+  "name": "Spinfluence",
   "version": "0.2.7",
-  "description": "A highly scalable, Progressive Web Application foundation with the best Developer Experience (DX).",
+  "description": "",
   "scripts": {
     "start": "pawjs start",
     "build": "pawjs build",

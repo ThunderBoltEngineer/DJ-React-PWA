@@ -11,8 +11,8 @@ export default {
     preload: false,
   },
   pwa: {
-    "name": "React Redux PWA Seo-ed",
-    "short_name": "RRPS",
+    "name": "Spinfluence",
+    "short_name": "Spinfleunce",
     // Possible values ltr(left to right)/rtl(right to left)
     "dir": "ltr",
     
@@ -21,13 +21,15 @@ export default {
     
     // Orientation of web-app possible:
     // any, natural, landscape, landscape-primary, landscape-secondary, portrait, portrait-primary, portrait-secondary
-    "orientation": "any",
+    "orientation": "portrait",
     "start_url": "/",
     "background_color": "#fff",
     "theme_color": "#fff",
     "display": "standalone",
-    "description": "Boilerplate for react, redux with server-side rendering for SEO and support for progressive web application"
+    "description": "Spinfluence Description",
+
   },
+
   seo: {
     title: "Common Title",
     site_name: "My Site Name",
