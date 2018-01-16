@@ -18,7 +18,6 @@ export default class Loader extends Component {
   render() {
     return (
       <div>
-        <Header />
         {
           this.props.screenState === SCREEN_STATE_LOADING &&
           (
@@ -34,7 +33,6 @@ export default class Loader extends Component {
         >
           {this.props.children || null}
         </Transition>
-        <Footer />
       </div>
     );
   }
