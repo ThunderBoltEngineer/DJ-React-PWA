@@ -1,0 +1,1 @@
+export default {"client":{"js":"/build/client.607a12eb40b08cab7c88.bundle.js","css":"/build/client.607a12eb40b08cab7c88.min.css"},"mod-login":{"js":"/build/mod-login.1c42fb4f82f71eef5162.bundle.js","css":"/build/mod-login.1c42fb4f82f71eef5162.min.css"},"mod-.DS_Store":{"js":"/build/mod-.DS_Store.feb64d67e539c650e334.bundle.js"}};
