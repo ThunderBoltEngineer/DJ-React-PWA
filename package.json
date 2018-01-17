@@ -24,7 +24,9 @@
   "babel": {
     "extends": "pawjs/src/babel/.babelrc"
   },
-  "dependencies": {},
+  "dependencies": {
+    "firebase": "^4.8.2"
+  },
   "devDependencies": {
     "bootstrap": "^3.3.7",
     "pawjs": "^0.4.6"
