@@ -18,6 +18,7 @@
 .input-code {
 	position: absolute;
 	width: 40%;
+	height: 30%;
 	left: 50%;
 	top: 50%;
 	transform: translateX(-50%) translateY(-50%);
@@ -48,6 +49,7 @@
 .btn-social {
 	position: absolute;
 	width: 70%;
+	height: 30%;
 	left: 50%;
 	top: 50%;
 	transform: translateX(-50%) translateY(-50%);
@@ -56,6 +58,11 @@
 .btn-social:active {
 	opacity: .3;
 }
+
+/*.btn-social img {
+	width: 100%;
+	height: 100%;
+}*/
 
 .btn-skip {
 	position: absolute;
