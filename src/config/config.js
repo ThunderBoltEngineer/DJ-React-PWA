@@ -11,8 +11,8 @@ export default {
     preload: false,
   },
   pwa: {
-    "name": "Spinfluence",
-    "short_name": "Spinfleunce",
+    "name": "spINFLUENCEit",
+    "short_name": "spINFLUENCEit",
     // Possible values ltr(left to right)/rtl(right to left)
     "dir": "ltr",
     
@@ -26,7 +26,7 @@ export default {
     "background_color": "#fff",
     "theme_color": "#fff",
     "display": "standalone",
-    "description": "Spinfluence Description",
+    "description": "",
 
   },
 

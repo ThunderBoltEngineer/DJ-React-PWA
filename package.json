@@ -1,5 +1,5 @@
 {
-  "name": "Spinfluence",
+  "name": "spINFLUENCEit",
   "version": "0.2.7",
   "description": "",
   "scripts": {
@@ -16,9 +16,9 @@
     "docker:prod:start": "docker run -it -p 3003:3003 react-pwa-prod"
   },
   "author": {
-    "name": "Atyantik Technologies Private Limited",
-    "email": "admin@atyantik.com",
-    "url": "https://www.atyantik.com/"
+    "name": "Andrew S.",
+    "email": "andrew.sydor.guardian@gmail.com",
+    "url": ""
   },
   "license": "MIT",
   "babel": {

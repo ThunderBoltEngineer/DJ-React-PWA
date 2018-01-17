@@ -1,5 +1,5 @@
 
-# Spinfluence
+# spINFLUENCEit
 Progressive Web App
 
 
