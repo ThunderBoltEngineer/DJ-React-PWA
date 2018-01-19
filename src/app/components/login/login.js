@@ -40,30 +40,32 @@ export default class Login extends Component {
       signInWithProvider(provider) {
 
             firebase.auth().signInWithPopup(provider).then(function(result) {
-                  var token = result.credential.accessToken;
                   var user = result.user;
 
-                  console.log(token);
+                  result.user.getIdToken().then(function(token) {
+                        console.log(token);
 
-                  // get party dict  (this should be built as independent module later)
-                  let baseUrl = "https://api-next.spinfluence.live/api/v1";
-                  let apiUrl = "/parties/join/TEST";
-                  let bearerToken = "Bearer " + token;
-  
-                  axios({
-                        method: 'post',
-                        url: baseUrl + apiUrl,
-                        headers: ['AUTHORIZATION': bearerToken]
-                  }).then(function(response) {
+                        let baseUrl = "https://api-next.spinfluence.live/api/v1";
+                        let apiUrl = "/parties/join/TEST";
+                        let bearerToken = "Bearer " + token;
+        
+                        axios({
+                              method: 'post',
+                              url: baseUrl + apiUrl,
+                              headers: {'Authorization': bearerToken}
+                        }).then(function(response) {
 
-                        console.log(response);
+                              console.log(response);
 
-                  }).catch(function(error) {
+                        }).catch(function(error) {
 
-                        // output error message
-                        var errorMessage = error.message;
-                        console.log(errorMessage);
+                              // output error message
+                              var errorMessage = error.message;
+                              console.log(errorMessage);
+                        });
                   });
+
+                  
  
             }).catch(function(error) {
                   // output error message
