@@ -41,6 +41,9 @@ export default class Login extends Component {
                   console.log(this.state.party)
             })
 
+            this.state = {
+                  partyCode: props.match.params.code
+            }
       }
 
       componentDidMount() {
@@ -64,7 +67,7 @@ export default class Login extends Component {
 
                   result.user.getIdToken().then(function(token) {
 
-                        store.dispatch(fetchParty(token));
+                        store.dispatch(fetchParty(token, _this.state.partyCode));
                   });
 
                   
@@ -95,7 +98,7 @@ export default class Login extends Component {
                         if(isAnonymous) { // anonymous sign in
                               user.getIdToken().then(function(token) {
                                     
-                                    store.dispatch(fetchParty(token));
+                                    store.dispatch(fetchParty(token, _this.state.partyCode));
                               });
                         }
 
@@ -112,21 +115,31 @@ export default class Login extends Component {
             */
 
       handleFBLogin(e) {
-            console.log("facebook button clicked!");
-
-            this.signInWithProvider(fbAuthProvider);
+      
+            if(this.state.partyCode) {
+                  this.signInWithProvider(fbAuthProvider);
+            }  else {
+                  alert('Please enter party code');
+            }
+            
       }
 
       handleTwitterLogin(e) {
-            console.log("twitter button clicked!");
 
-            this.signInWithProvider(twitterAuthProvider);
+            if(this.state.partyCode) {
+                  this.signInWithProvider(twitterAuthProvider);
+            }  else {
+                  alert('Please enter party code');
+            }
       }
 
       handleGooglePlusLogin(e) {
-            console.log("google plus button clicked");
 
-            this.signInWithProvider(googleAuthProvider);
+            if(this.state.partyCode) {
+                  this.signInWithProvider(googleAuthProvider);
+            } else {
+                  alert('Please enter party code');
+            }      
       }
 
 
@@ -136,9 +149,22 @@ export default class Login extends Component {
             */
 
       handleSkip(e) {
-            console.log("skip button clicked");
 
-            this.signInAnonymously();
+            if(this.state.partyCode) {
+                  this.signInAnonymously();
+            } else {
+                  alert('Please enter party code');
+            }
+            
+      }
+
+      /*
+            PartyCode Change handler
+
+            */
+
+      onPartyCodeChange(e) {
+            this.setState({partyCode: e.target.value});
       }
 
       /*
@@ -157,7 +183,7 @@ export default class Login extends Component {
             			<div className={`${styles["div-separator"]}`}/>
             		</div>
             		<div className={`${styles["div-code"]}`}>
-                              <input type="text" placeholder="ENTER CODE" className={`${styles["input-code"]}`} defaultValue={this.props.match.params.code}/>
+                              <input type="text" placeholder="ENTER CODE" className={`${styles["input-code"]}`} defaultValue={this.state.partyCode} onChange={this.onPartyCodeChange.bind(this)}/>
             			<div className={`${styles["div-separator"]}`}/>
             		</div >
             		<div className={`${styles["div-fb"]}`}>
