@@ -15,6 +15,7 @@ import GooglePlusButton from "src/resources/images/login/gp_signin.png";
 import config from "src/config/firebase_config.js";
 const firebaseConfig = config.config;
 
+
 // configure firebase 
 firebase.initializeApp(firebaseConfig);
 
@@ -23,13 +24,30 @@ const fbAuthProvider = new firebase.auth.FacebookAuthProvider();
 const twitterAuthProvider = new firebase.auth.TwitterAuthProvider();
 const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
+// redux
+
+import store from 'src/app/store';
+import {fetchParty} from 'src/app/actions/partyActions';
+
 
 // component
 
 export default class Login extends Component {
 
+      constructor(props) {
+            super(props)
+            store.subscribe(()=>{
+                  this.setState({party: store.getState().party})
+                  console.log(this.state.party)
+            })
+
+      }
+
       componentDidMount() {
-            console.log("component mount!");
+
+            this.signInWithProvider = this.signInWithProvider.bind(this);
+            this.signInAnonymously = this.signInAnonymously.bind(this);
+            this.setState({party: store.getState().party})
       }
 
       /*
@@ -37,32 +55,16 @@ export default class Login extends Component {
 
             */
 
-      signInWithProvider(provider) {
+      signInWithProvider = (provider) => {
+
+            let _this = this;
 
             firebase.auth().signInWithPopup(provider).then(function(result) {
                   var user = result.user;
 
                   result.user.getIdToken().then(function(token) {
-                        console.log(token);
 
-                        let baseUrl = "https://api-next.spinfluence.live/api/v1";
-                        let apiUrl = "/parties/join/TEST";
-                        let bearerToken = "Bearer " + token;
-        
-                        axios({
-                              method: 'post',
-                              url: baseUrl + apiUrl,
-                              headers: {'Authorization': bearerToken}
-                        }).then(function(response) {
-
-                              console.log(response);
-
-                        }).catch(function(error) {
-
-                              // output error message
-                              var errorMessage = error.message;
-                              console.log(errorMessage);
-                        });
+                        store.dispatch(fetchParty(token));
                   });
 
                   
@@ -79,7 +81,7 @@ export default class Login extends Component {
 
             */
 
-      signInAnonymously() {
+      signInAnonymously = () => {
             firebase.auth().signInAnonymously().catch(function(error) {
                   var errorMessage = error.message;
                   console.log(errorMessage);
@@ -92,7 +94,8 @@ export default class Login extends Component {
                         
                         if(isAnonymous) { // anonymous sign in
                               user.getIdToken().then(function(token) {
-                                    console.log(token);
+                                    
+                                    store.dispatch(fetchParty(token));
                               });
                         }
 
