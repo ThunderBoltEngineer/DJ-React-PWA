@@ -74,6 +74,34 @@ export default class Login extends Component {
             });
       }
 
+      /*
+            firebase anonymous authentication
+
+            */
+
+      signInAnonymously() {
+            firebase.auth().signInAnonymously().catch(function(error) {
+                  var errorMessage = error.message;
+                  console.log(errorMessage);
+            });
+
+            firebase.auth().onAuthStateChanged(function(user) {
+                  if(user) {
+                        // user signed in 
+                        var isAnonymous = user.isAnonymous;
+                        
+                        if(isAnonymous) { // anonymous sign in
+                              user.getIdToken().then(function(token) {
+                                    console.log(token);
+                              });
+                        }
+
+                  } else {
+                        // user signed out
+                  }
+            });
+      }
+
 
       /* 
             Social Login Event Handler
@@ -107,6 +135,7 @@ export default class Login extends Component {
       handleSkip(e) {
             console.log("skip button clicked");
 
+            this.signInAnonymously();
       }
 
       /*
