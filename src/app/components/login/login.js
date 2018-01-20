@@ -66,7 +66,6 @@ export default class Login extends Component {
                   var user = result.user;
 
                   result.user.getIdToken().then(function(token) {
-
                         store.dispatch(fetchParty(token, _this.state.partyCode));
                   });
 
@@ -85,6 +84,8 @@ export default class Login extends Component {
             */
 
       signInAnonymously = () => {
+            let _this = this;
+
             firebase.auth().signInAnonymously().catch(function(error) {
                   var errorMessage = error.message;
                   console.log(errorMessage);
@@ -164,7 +165,7 @@ export default class Login extends Component {
             */
 
       onPartyCodeChange(e) {
-            this.setState({partyCode: e.target.value});
+            this.setState({partyCode: e.target.value.toUpperCase()});
       }
 
       /*
