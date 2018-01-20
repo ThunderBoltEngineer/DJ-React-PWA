@@ -50,6 +50,7 @@
 	position: absolute;
 	width: 70%;
 	height: 30%;
+	max-width: 540px;
 	left: 50%;
 	top: 50%;
 	transform: translateX(-50%) translateY(-50%);
