@@ -62,7 +62,7 @@ export default class Login extends Component {
 
             let _this = this;
 
-            firebase.auth().signInWithPopup(provider).then(function(result) {
+            firebase.auth().signInWithRedirect(provider).then(function(result) {
                   var user = result.user;
 
                   result.user.getIdToken().then(function(token) {
