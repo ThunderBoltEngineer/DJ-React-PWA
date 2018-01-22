@@ -63,6 +63,8 @@ export default class Login extends Component {
             let _this = this;
 
             firebase.auth().signInWithPopup(provider).then(function(result) {
+                  alert('successfully authenticated!');
+
                   var user = result.user;
 
                   result.user.getIdToken().then(function(token) {
@@ -72,6 +74,7 @@ export default class Login extends Component {
                   
  
             }).catch(function(error) {
+                  alert('authentication failed');
                   // output error message
                   var errorMessage = error.message;
                   console.log(errorMessage);
@@ -87,6 +90,8 @@ export default class Login extends Component {
             let _this = this;
 
             firebase.auth().signInAnonymously().catch(function(error) {
+                  alert('authentication failed');
+
                   var errorMessage = error.message;
                   console.log(errorMessage);
             });
@@ -97,6 +102,8 @@ export default class Login extends Component {
                         var isAnonymous = user.isAnonymous;
                         
                         if(isAnonymous) { // anonymous sign in
+                              alert('successfully authenticated');
+
                               user.getIdToken().then(function(token) {
                                     
                                     store.dispatch(fetchParty(token, _this.state.partyCode));
