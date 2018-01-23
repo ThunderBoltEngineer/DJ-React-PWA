@@ -7,9 +7,6 @@ import * as styles from "./styles.css";
 
 // import images
 import LoginBackground from "src/resources/images/login/bg.png";
-import FacebookButton from "src/resources/images/login/fb_signin.png";
-import TwitterButton from "src/resources/images/login/tw_signin.png";
-import GooglePlusButton from "src/resources/images/login/gp_signin.png";
 
 // import firebase configuration info
 import config from "src/config/firebase_config.js";
@@ -19,10 +16,7 @@ const firebaseConfig = config.config;
 // configure firebase 
 firebase.initializeApp(firebaseConfig);
 
-const auth = firebase.auth;
-const fbAuthProvider = new firebase.auth.FacebookAuthProvider();
-const twitterAuthProvider = new firebase.auth.TwitterAuthProvider();
-const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+const auth = firebase.auth; 
 
 // redux
 
@@ -35,51 +29,41 @@ import {fetchParty} from 'src/app/actions/partyActions';
 export default class Login extends Component {
 
       constructor(props) {
-            super(props)
-            store.subscribe(()=>{
-                  this.setState({party: store.getState().party})
-                  console.log(this.state.party)
-            })
+            super(props);
+
+            this.signInAnonymously = this.signInAnonymously.bind(this);
 
             this.state = {
-                  partyCode: props.match.params.code
-            }
+                  partyCode: props.match.params.code,
+                  joining: props.match.params.code === undefined ? false : true
+            };
       }
 
       componentDidMount() {
-
-            this.signInWithProvider = this.signInWithProvider.bind(this);
-            this.signInAnonymously = this.signInAnonymously.bind(this);
-            this.setState({party: store.getState().party})
-      }
-
-      /*
-            firebase authentication with given provider, get access token
-
-            */
-
-      signInWithProvider = (provider) => {
-
-            let _this = this;
-
-            firebase.auth().signInWithPopup(provider).then(function(result) {
-                  alert('successfully authenticated!');
-
-                  var user = result.user;
-
-                  result.user.getIdToken().then(function(token) {
-                        store.dispatch(fetchParty(token, _this.state.partyCode));
-                  });
-
+            this.unsubscribe = store.subscribe(() => {
+                  this.setState({party: store.getState().party})
                   
- 
-            }).catch(function(error) {
-                  alert('authentication failed');
-                  // output error message
-                  var errorMessage = error.message;
-                  console.log(errorMessage);
+                  console.log('subscribe');
+
+
+                  // navigate to main page
+                  this.setState({joining: false});
+                  this.props.history.push('/main');
             });
+
+
+            this.setState({party: store.getState().party});
+
+            if(this.state.joining) {
+                  this.signInAnonymously();
+            }
       }
+
+      componentWillUnmount() {
+            this.unsubscribe();
+      }
+
+
 
       /*
             firebase anonymous authentication
@@ -94,6 +78,8 @@ export default class Login extends Component {
 
                   var errorMessage = error.message;
                   console.log(errorMessage);
+
+                  this.setState({joining: false});
             });
 
             firebase.auth().onAuthStateChanged(function(user) {
@@ -102,8 +88,7 @@ export default class Login extends Component {
                         var isAnonymous = user.isAnonymous;
                         
                         if(isAnonymous) { // anonymous sign in
-                              alert('successfully authenticated');
-
+                              
                               user.getIdToken().then(function(token) {
                                     
                                     store.dispatch(fetchParty(token, _this.state.partyCode));
@@ -117,48 +102,17 @@ export default class Login extends Component {
       }
 
 
-      /* 
-            Social Login Event Handler
-
-            */
-
-      handleFBLogin(e) {
-      
-            if(this.state.partyCode) {
-                  this.signInWithProvider(fbAuthProvider);
-            }  else {
-                  alert('Please enter party code');
-            }
-            
-      }
-
-      handleTwitterLogin(e) {
-
-            if(this.state.partyCode) {
-                  this.signInWithProvider(twitterAuthProvider);
-            }  else {
-                  alert('Please enter party code');
-            }
-      }
-
-      handleGooglePlusLogin(e) {
-
-            if(this.state.partyCode) {
-                  this.signInWithProvider(googleAuthProvider);
-            } else {
-                  alert('Please enter party code');
-            }      
-      }
-
-
       /*
-            Skip Login Event Handler
+            Join Party Event Handler
 
             */
 
-      handleSkip(e) {
+      handleJoin(e) {
+            
 
             if(this.state.partyCode) {
+                  this.setState({joining: true});
+
                   this.signInAnonymously();
             } else {
                   alert('Please enter party code');
@@ -181,47 +135,41 @@ export default class Login extends Component {
             */
 
       render() {
-          return (
-            <div>
-            	<img src={LoginBackground} alt="Login" className="img-responsive" className={`${styles["img-bg"]}`} />
-            	<p className={`${styles["label-login"]}`}> Log In </p>
-            	<div className={`${styles["div-login"]}`}>
-            		<div className={`${styles["div-title"]}`}>
-            			<p>spINFLUENCEit</p>
-            			<div className={`${styles["div-separator"]}`}/>
-            		</div>
-            		<div className={`${styles["div-code"]}`}>
-                              <input type="text" placeholder="ENTER CODE" className={`${styles["input-code"]}`} defaultValue={this.state.partyCode} onChange={this.onPartyCodeChange.bind(this)}/>
-            			<div className={`${styles["div-separator"]}`}/>
-            		</div >
-            		<div className={`${styles["div-fb"]}`}>
+            let joining = this.state.joining;
 
-            			<div className={`${styles["btn-social"]}`} onClick={this.handleFBLogin.bind(this)}>
-            				<img className="img-responsive" src={FacebookButton}/>
-            			</div>
-            			<div className={`${styles["div-or-separator"]}`}>
-
-            			</div>
-            		</div>
-            		<div className={`${styles["div-other"]}`}>
-            			<div className={`${styles["div-other-half"]}`}>
-            				<div className={`${styles["btn-social"]}`} onClick={this.handleTwitterLogin.bind(this)}>
-            					<img className="img-responsive" src={TwitterButton}/>
-            				</div>
-            			</div>
-            			<div className={`${styles["div-other-half"]}`}>
-            				<div className={`${styles["btn-social"]}`} onClick={this.handleGooglePlusLogin.bind(this)}>
-            					<img className="img-responsive" src={GooglePlusButton}/>
-            				</div>
-            			</div>
-            		</div>
-            		<div className={`${styles["div-skip"]}`}>
-            			<div className={`${styles["btn-transparent"]} ${styles["btn-skip"]}`} onClick={this.handleSkip.bind(this)}>
-            				Skip Login
-            			</div>
-            		</div>
-            	</div>
-            </div>
-          );
+            if (joining) {
+                  return (
+                        <div>
+                              <img src={LoginBackground} alt="Login" className="img-responsive" className={`${styles["img-bg"]}`} />
+                              <div className={`${styles["joining-text"]}`}>
+                                    Joining ...
+                              </div>
+                        </div>
+                        );
+            } else {
+                 return (
+                        <div>
+                              <img src={LoginBackground} alt="Login" className="img-responsive" className={`${styles["img-bg"]}`} />
+                              <div className={`${styles["container-login"]}`}> 
+                                    <p className={`${styles["label-login"]}`}> Log In </p>
+                                    <div className={`${styles["div-login"]}`}>
+                                          <div className={`${styles["div-title"]}`}>
+                                                <p>spINFLUENCEit</p>
+                                                <div className={`${styles["div-separator"]}`}/>
+                                          </div>
+                                          <div className={`${styles["div-code"]}`}>
+                                                <input type="text" placeholder="ENTER CODE" className={`${styles["input-code"]}`} defaultValue={this.state.partyCode} onChange={this.onPartyCodeChange.bind(this)}/>
+                                          </div >
+                                          <div className={`${styles["div-skip"]}`}>
+                                                <div className={`${styles["btn-transparent"]} ${styles["btn-skip"]}`} onClick={this.handleJoin.bind(this)}>
+                                                      Join Party
+                                                </div>
+                                          </div>
+                                    </div>
+                              </div>
+                        </div>
+                  ); 
+            }
+          
       }
 }

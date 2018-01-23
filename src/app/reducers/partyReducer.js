@@ -1,5 +1,5 @@
 const initialState = {
-	partyId: 0,
+	partyId: -1,
 	partyName: "",
 	djName: "",
 	djId: "",
@@ -22,11 +22,7 @@ export default function reducer(state = initialState, action){
 				djName: action.payload.data.dj.performance_name, 
 				djId: action.payload.data.dj.id}
 		case "FETCH_PARTY_REJECTED":
-			return {...state, fetching: false, 
-				partyId: action.payload.data.id, 
-				partyName: action.payload.data.name, 
-				djName: action.payload.data.dj.performance_name, 
-				djId: action.payload.data.dj.id}
+			return {...state, fetching: false}
 		default:
 			return state;
 	}
