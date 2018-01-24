@@ -1,5 +1,19 @@
 const initialState = {
-	data: null,
+	data: [{
+		code: "",
+		dj: {
+			first_name: "",
+			id: 0,
+			last_name: "",
+			performance_name: ""
+		},
+		id: -1,
+		name: "",
+		paid: false,
+		status: "",
+		url: "",
+		venue: ""
+	}],
 
 	fetching: false,
 	fetched: false,
