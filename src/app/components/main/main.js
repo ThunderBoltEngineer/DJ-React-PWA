@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import firebase from "firebase";
 import {Redirect} from "react-router-dom";
+import Carousel from "src/app/components/carousel";
 
 // import css
 import * as styles from "./styles.css";
@@ -10,6 +11,7 @@ import MainBackground from "src/resources/images/main/background.png";
 import EQLZ from "src/resources/images/main/eqlz.png";
 import Like from "src/resources/images/main/like.png";
 import Dislike from "src/resources/images/main/dislike.png";
+import Chat from "src/resources/images/main/chat.png";
 
 // redux
 import store from 'src/app/store';
@@ -23,15 +25,20 @@ export default class Main extends Component {
 
 			// function binding
    			this.hasJoinedParty = this.hasJoinedParty.bind(this);
-   			this.state = {recentPlayList: store.getState().recentlyPlayedSongs.data};
+
+   			// state initialization
+   			this.state = {
+   				recentPlayList: store.getState().recentlyPlayedSongs.data,
+   				currentIndex: 0
+   				};
 		}
 
 		componentDidMount() {
 
 			//connect to store
 			this.unsubscribe = store.subscribe(()=>{
-                  this.setState({recentPlayList: store.getState().recentlyPlayedSongs.data});
                   console.log('subscribe on mainpage');
+                  this.setState({recentPlayList: store.getState().recentlyPlayedSongs.data});
             });
 
 
@@ -74,6 +81,15 @@ export default class Main extends Component {
 			}
 		}
 
+		/*
+			slide change event listener
+
+			*/
+		onSlideChange(index) {
+			console.log(index);
+			this.setState({currentIndex: index});
+		}
+
 
 
 		/*
@@ -103,7 +119,7 @@ export default class Main extends Component {
 							</div>
 
 							<div className={`${styles["div-carousel"]}`}>
-
+								<Carousel playList={this.state.recentPlayList} className={`${styles["carousel"]}`} onSlideChange={this.onSlideChange.bind(this)}></Carousel>
 							</div>	
 
 							<div className={`${styles["div-song-info"]}`}>
@@ -113,8 +129,8 @@ export default class Main extends Component {
 										<img src={EQLZ} alt="song" className="img-responsive"/>
 									</div>
 									<div className="col-xs-9">
-										<p className={`${styles["song-title"]}`}>{this.state.recentPlayList[0].title}</p><br/>
-										<p className={`${styles["song-artist"]}`}>{this.state.recentPlayList[0].artist}</p>
+										<p className={`${styles["song-title"]}`}>{this.state.recentPlayList[this.state.currentIndex].title}</p><br/>
+										<p className={`${styles["song-artist"]}`}>{this.state.recentPlayList[this.state.currentIndex].artist}</p>
 									</div>
 								</div>
 							</div>
@@ -134,7 +150,14 @@ export default class Main extends Component {
 							</div>
 
 							<div className={`${styles["div-footer"]}`}>
-								
+								<div className="row" className={`${styles["row-footer"]}`}>
+									<div className={`${styles["col-left"]}`}>
+
+									</div>
+									<div className={`${styles["col-right"]}`}>
+										<img src={Chat} className="img-responsive"/>
+									</div>
+								</div>
 							</div>
 
 						</div>

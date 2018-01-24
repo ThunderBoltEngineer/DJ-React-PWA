@@ -1,18 +1,9 @@
 const initialState = {
 	data: [{
-		code: "",
-		dj: {
-			first_name: "",
-			id: 0,
-			last_name: "",
-			performance_name: ""
-		},
-		id: -1,
-		name: "",
-		paid: false,
-		status: "",
-		url: "",
-		venue: ""
+		id: 0,
+		picture_url: "",
+		artist: "",
+		title: ""
 	}],
 
 	fetching: false,
