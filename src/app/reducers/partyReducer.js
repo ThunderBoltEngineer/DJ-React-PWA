@@ -23,6 +23,10 @@ export default function reducer(state = initialState, action){
 				djId: action.payload.data.dj.id}
 		case "FETCH_PARTY_REJECTED":
 			return {...state, fetching: false}
+
+		case "LOGOUT_FULFILLED":
+			return {...state, partyId: -1}
+			
 		default:
 			return state;
 	}

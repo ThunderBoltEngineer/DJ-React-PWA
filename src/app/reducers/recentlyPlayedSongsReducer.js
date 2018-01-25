@@ -3,7 +3,8 @@ const initialState = {
 		id: 0,
 		picture_url: "",
 		artist: "",
-		title: ""
+		title: "",
+		user_vote: "none"
 	}],
 
 	fetching: false,
@@ -28,6 +29,17 @@ export default function reducer(state = initialState, action){
 				data: playList}
 		case "FETCH_RECENT_LIST_REJECTED":
 			return {...state, fetching: false}
+
+		case "VOTE_SONG_FULFILLED":
+			console.log(action.payload);
+			let index = action.payload.index;
+			let user_vote = action.payload.vote == "upvote" ? "up" : "down";
+
+			var newState = state;
+			newState.data[index].user_vote = user_vote;
+
+			return newState;
+
 		default:
 			return state;
 	}

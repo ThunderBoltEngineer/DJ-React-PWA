@@ -28,6 +28,7 @@
     "axios": "^0.17.1",
     "firebase": "^4.8.2",
     "react-image-slider": "^0.1.0",
+    "react-sidebar": "^2.3.2",
     "react-slick": "^0.16.0",
     "redux-thunk": "^2.2.0",
     "slick-carousel": "^1.8.1"
