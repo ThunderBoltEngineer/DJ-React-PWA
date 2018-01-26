@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import firebase from "firebase";
 import {Redirect} from "react-router-dom";
-import Carousel from "src/app/components/carousel";
 import Sidebar from 'react-sidebar';
+
+import Carousel from "src/app/components/carousel";
+
 
 // import css
 import * as styles from "./styles.css";

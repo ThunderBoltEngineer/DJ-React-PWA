@@ -4,6 +4,8 @@ import SlickCarousel from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+import Image from "src/app/components/image";
+
 import Album from "src/resources/images/main/album.png";
 
 // import css
@@ -46,7 +48,7 @@ export default class Carousel extends Component {
 
 			var carouselContent = this.props.playList.map(function(song) {
 				console.log(song.picture_url);
-				return <div className={`${styles["img-container"]}`}><img key={song.id} src={song.picture_url}/></div>;
+				return <div className={`${styles["img-container"]}`}><Image key={song.id} src={song.picture_url} fallbackSrc={Album}/></div>;
 			});
 
 		return (

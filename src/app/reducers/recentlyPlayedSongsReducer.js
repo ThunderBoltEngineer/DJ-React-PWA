@@ -1,7 +1,7 @@
 const initialState = {
 	data: [{
 		id: 0,
-		picture_url: "",
+		picture_url: null,
 		artist: "",
 		title: "",
 		user_vote: "none"
@@ -22,6 +22,9 @@ export default function reducer(state = initialState, action){
 			let data = action.payload.data;
 			var playList = [];
 			data.forEach(function(item) {
+				if (item.picture_url == null) {
+					item.picture_url = "";
+				}
 				playList.push(item);
 			});
 
