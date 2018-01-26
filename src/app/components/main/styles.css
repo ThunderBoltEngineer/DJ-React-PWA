@@ -101,6 +101,7 @@
 }
 
 .div-song-info img {
+	margin: auto;
 	position: relative;
 	left: 10px;
 	top: 50%;
@@ -190,6 +191,7 @@
 }
 
 .col-right img {
+	margin: auto;
 	margin-top: 20%;
 	background-color: #876048;
 	border-radius: 10px;
