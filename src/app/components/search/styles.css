@@ -81,6 +81,10 @@
 	border-radius: 30px;
 }
 
+.div-request:active {
+	opacity: .3;
+}
+
 .div-request p {
 	top: 50%;
 	transform: translateY(170%);

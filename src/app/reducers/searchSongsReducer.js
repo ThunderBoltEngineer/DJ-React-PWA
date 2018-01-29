@@ -14,13 +14,12 @@ export default function reducer(state = initialState, action){
 			return {...state, fetching: true}
 		case "SEARCH_SONG_FULFILLED":
 			console.log(action.payload);
-			//let searchId = action.payload["search_id"];
-			//let data = action.payload.matches;
-			
-			//matches = data;
+			let searchId = action.payload.data.search_id;
+			let term = action.payload.data.term;
+			let matches = action.payload.data.matches;
 
-			//return {...state, fetching: false, fetched: true, data: playList}
-			return {...state, fetching: false}
+			return {...state, fetching: false, fetched: true, searchId: searchId, matches: matches}
+
 		case "SEARCH_SONG_REJECTED":
 			return {...state, fetching: false}
 
