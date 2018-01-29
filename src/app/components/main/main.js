@@ -33,7 +33,7 @@ export default class Main extends Component {
 			super(props);
 
 			// function binding
-   			this.onSetSidebarOpen.bind(this);
+   			this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
 
    			// state initialization
    			this.state = {
@@ -71,7 +71,7 @@ export default class Main extends Component {
 
 	                user.getIdToken().then(function(token) {
 	                    _this.setState({token: token});
-	    				store.dispatch(fetchRecentlyPlayedSongs(token, store.getState().party.partyId));
+	    				store.dispatch(fetchRecentlyPlayedSongs(token, _this.state.partyId, store.getState().party.partyId));
 	                });
 
 	            }
@@ -134,6 +134,15 @@ export default class Main extends Component {
 				
 				store.dispatch(voteSong(index, token, vote, songId, partyId));
 			}
+		}
+
+		/*
+			user clicked Request New Song button
+
+			*/
+
+		onRequestSong(e) {
+			this.props.history.push('/main/search');
 		}
 
 		/*
@@ -249,7 +258,7 @@ export default class Main extends Component {
 							<div className={`${styles["div-footer"]}`}>
 								<div className="row" className={`${styles["row-footer"]}`}>
 									<div className={`${styles["col-left"]}`}>
-										<div>
+										<div onClick={this.onRequestSong.bind(this)}>
 											Request New Songs
 										</div>
 									</div>

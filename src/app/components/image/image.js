@@ -2,6 +2,12 @@ import React, {Component} from "react";
 
 import Album from "src/resources/images/main/album.png";
 
+/*
+
+  Image component with fallback src
+
+  */
+
 export default class Image extends React.Component {
   constructor() {
     super();
