@@ -35,7 +35,7 @@ export default class Search extends Component {
    				matches: store.getState().searchSongs.matches,
    				tableHeight: 1,
    				selectedRow: -1
-   				};
+   			};
 
 		}
 
@@ -116,6 +116,9 @@ export default class Search extends Component {
 			*/
 
 		onRequest(e) {
+			if (this.state.selectedRow >= 0) {
+				this.props.history.push('/main/search/request/' + this.state.selectedRow);
+			}
 			
 		}
 

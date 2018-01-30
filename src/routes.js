@@ -3,9 +3,11 @@ import {configureRoutes} from "pawjs/src/utils/bundler";
 import * as Login from "./pages/login";
 import * as Main from "./pages/main";
 import * as Search from "./pages/search";
+import * as Request from "./pages/request";
 
 export default configureRoutes([
   Login,
   Main,
-  Search
+  Search,
+  Request
 ]);
