@@ -146,6 +146,16 @@ export default class Main extends Component {
 		}
 
 		/*
+			user clicked message 
+
+			*/
+
+		onMessage(e) {
+			this.props.history.push('/main/message');
+		}
+		
+
+		/*
 			menu events
 
 			*/
@@ -263,7 +273,7 @@ export default class Main extends Component {
 										</div>
 									</div>
 									<div className={`${styles["col-right"]}`}>
-										<img src={Chat} className="img-responsive"/>
+										<img src={Chat} className="img-responsive" onClick={this.onMessage.bind(this)}/>
 									</div>
 								</div>
 							</div>
