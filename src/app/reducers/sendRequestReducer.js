@@ -15,7 +15,7 @@ export default function reducer(state = initialState, action){
 		
 			console.log(action.payload);
 
-			return {...state, fetching: false, fetched: true    }
+			return {...state, fetching: false, fetched: true, success: true}
 
 		case "SEND_REQUEST_REJECTED":
 			return {...state, fetching: false}

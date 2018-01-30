@@ -45,3 +45,66 @@
 	font-size: 16px;
 	color: #DEBDC2;
 }
+
+
+.div-song-artist {
+	margin-top: 5px;
+	width: 100%;
+	height: 5%;
+	background-color: rgba(0,0,0,.4);
+}
+
+.div-song-artist p {
+	position: relative;
+	left: 50%;
+	top: 50%;
+
+	transform: translateX(-50%) translateY(-50%);
+	text-align: center;
+	font-size: 14px;
+	color: #E5BF66;
+}
+
+.div-song-title {
+	width: 100%;
+	height: 5%;
+	background-color: rgba(0,0,0,.4);
+}
+
+.div-song-title p {
+	position: relative;
+	left: 50%;
+	top: 50%;
+
+	transform: translateX(-50%) translateY(-50%);
+	text-align: center;
+	font-size: 14px;
+	font-weight: lighter;
+	color: #FFFFFF;
+}
+
+.textarea-message {
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 10%;
+}
+
+.div-sendrequest {
+	position: relative;
+	width: 80%;
+	left: 10%;
+	right: 10%;
+	top: 5%;
+	background: #876048;
+	color: white;
+	height: 60px;
+	text-align: center;
+	vertical-align: middle;
+	padding: 20px;
+	border-radius: 30px;
+}
+
+.div-sendrequest:active {
+	opacity: .3;
+}
