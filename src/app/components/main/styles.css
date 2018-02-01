@@ -180,7 +180,7 @@
 }
 
 .col-left div:active {
-	opacity: .3;
+	background-color: rgb(82,56,35);
 }
 
 .col-right {
@@ -199,7 +199,7 @@
 }
 
 .col-right img:active {
-	opacity: .3;
+	background-color: rgb(82,56,35);
 }
 
 .row-footer {
@@ -250,5 +250,5 @@
 }
 
 .div-menu-sidebar:active {
-	opacity: .3;
+	background-color: rgb(82,56,35);
 }

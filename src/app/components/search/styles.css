@@ -82,7 +82,7 @@
 }
 
 .div-request:active {
-	opacity: .3;
+	background-color: rgb(82,56,35);
 }
 
 .div-request p {
