@@ -89,3 +89,33 @@
 	top: 50%;
 	transform: translateY(170%);
 }
+
+
+
+/* Modal Dialog Styles */
+
+.modal-title {
+	color: white;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.btn-social {
+	height: 50px;
+	max-width: 540px;
+}
+
+.btn-social:active {
+	opacity: .3;
+}
+
+.btn-close {
+	margin-top: 20px;
+	text-align: center;
+	color: white;
+	text-decoration: underline;
+}
+
+.btn-close:active {
+	opacity: .3;
+}

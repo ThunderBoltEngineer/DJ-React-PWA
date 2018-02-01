@@ -3,6 +3,7 @@ import Infinite from "react-infinite";
 import {Redirect} from "react-router-dom";
 import ListItem from "src/app/components/listitem"
 import firebase from "firebase";
+import Modal from "react-modal";
 
 // import css
 import * as styles from "./styles.css";
@@ -10,6 +11,14 @@ import * as styles from "./styles.css";
 // import images
 import MainBackground from "src/resources/images/main/background.png";
 import Back from "src/resources/images/main/Back.png";
+import FacebookButton from "src/resources/images/login/fb_signin.png";
+import TwitterButton from "src/resources/images/login/tw_signin.png";
+import GooglePlusButton from "src/resources/images/login/gp_signin.png";
+
+// firebase
+const fbAuthProvider = new firebase.auth.FacebookAuthProvider();
+const twitterAuthProvider = new firebase.auth.TwitterAuthProvider();
+const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
 // redux
 import store from 'src/app/store';
@@ -18,12 +27,31 @@ import {searchSongs} from 'src/app/actions/searchSongsActions';
 
 var prevTimer = null;
 
+const modalStyles = {
+	overlay: {
+		backgroundColor: 'rgba(0,0,0,0.4)'
+	},
+
+	content : {
+	top                   : '50%',
+	left                  : '15%',
+	right                 : '15%',
+	bottom                : 'auto',
+	transform: 'translateY(-50%)',
+	backgroundColor: 'rgba(20,20,20, 0.9)',
+	outline: 'none',
+	border: '0px solid #ccc',
+	borderRadius: '20px'
+	}
+};
+
 export default class Search extends Component {
 
 		constructor(props) {
 			super(props);
 
 			// function binding
+			this.signInWithProvider = this.signInWithProvider.bind(this);
 
    			// state initialization
    			this.state = {
@@ -34,7 +62,8 @@ export default class Search extends Component {
    				token: null,
    				matches: store.getState().searchSongs.matches,
    				tableHeight: 1,
-   				selectedRow: -1
+   				selectedRow: -1,
+   				modalIsOpen: false
    			};
 
 		}
@@ -117,7 +146,11 @@ export default class Search extends Component {
 
 		onRequest(e) {
 			if (this.state.selectedRow >= 0) {
-				this.props.history.push('/main/search/request/' + this.state.selectedRow);
+				if (firebase.auth().currentUser.isAnonymous) {
+					this.setState({modalIsOpen: true});
+				} else {
+					this.props.history.push('/main/search/request/' + this.state.selectedRow);
+				}
 			}
 			
 		}
@@ -126,9 +159,56 @@ export default class Search extends Component {
 			user selected one row at index
 
 			*/
+			
 		onSelected(index) {
 			console.log(index);
 			this.setState({selectedRow: index});
+		}
+
+		/*
+			Modal Dialog Events
+
+			*/
+
+		handleFBLogin(e) {
+			this.signInWithProvider(fbAuthProvider);
+		}
+
+		handleTwitterLogin(e) {
+			this.signInWithProvider(twitterAuthProvider);
+		}
+
+		handleGooglePlusLogin(e) {
+			this.signInWithProvider(googleAuthProvider);
+		}
+
+		handleClose(e) {
+			this.setState({modalIsOpen: false});
+		}
+
+		/*
+            firebase authentication with given provider, get access token
+
+            */
+
+		signInWithProvider = (provider) => {
+
+		    let _this = this;
+
+		    firebase.auth().signInWithPopup(provider).then(function(result) {
+
+				_this.setState({modalIsOpen: false});
+
+				_this.props.history.push('/main/search/request/' + _this.state.selectedRow);   
+
+		    }).catch(function(error) {
+		          alert('authentication failed');
+		          // output error message
+		          var errorMessage = error.message;
+		          console.log(errorMessage);
+
+		          _this.setState({modalIsOpen: false});
+		    });
 		}
 
 
@@ -148,7 +228,36 @@ export default class Search extends Component {
         			}
 
 					return (
+
 					<div>
+						<Modal
+							isOpen={this.state.modalIsOpen}
+							style={modalStyles}
+							contentLabel=""
+							ariaHideApp={false}
+							>
+							<h3 className={`${styles["modal-title"]}`}> Social Login </h3>
+							<div>
+								<div className={`${styles["btn-social"]}`} onClick={this.handleFBLogin.bind(this)}>
+            						<img className="img-responsive" src={FacebookButton}/>
+            					</div>
+
+            					<div className={`${styles["btn-social"]}`} onClick={this.handleTwitterLogin.bind(this)}>
+            						<img className="img-responsive" src={TwitterButton}/>
+            					</div>
+
+            					<div className={`${styles["btn-social"]}`} onClick={this.handleGooglePlusLogin.bind(this)}>
+            						<img className="img-responsive" src={GooglePlusButton}/>
+            					</div>
+
+            					<div className={`${styles["btn-close"]}`} onClick={this.handleClose.bind(this)}>
+            						Maybe later
+            					</div>
+							</div>
+						</Modal>
+
+
+
 						<img src={MainBackground} alt="Main" className="img-responsive" className={`${styles["img-bg"]}`} />
 						
 						<div className={`${styles["container-main"]}`}>
