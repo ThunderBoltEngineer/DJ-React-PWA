@@ -66,23 +66,7 @@ export default class Search extends Component {
    				modalIsOpen: false
    			};
 
-   			// get token
-			if (this.state.partyId > 0) {
-				let _this = this;
-
-
-				firebase.auth().onAuthStateChanged(function(user) {
-	        	if(user) {
-	                // user signed in 
-	                console.log('logged in');
-
-	                user.getIdToken().then(function(token) {
-	                    _this.setState({token: token});
-	                });
-
-	            }
-	        });
-			}
+   			
 
 		}
 
@@ -127,14 +111,29 @@ export default class Search extends Component {
 		
 
 		onSearchTermChange(e) {
-			let _this = this;
 			let searchTerm = e.target.value;
 
 			if (searchTerm != "") {
+				let _this = this;
+
 				window.clearTimeout(prevTimer);
+
 				prevTimer = window.setTimeout(() => {
 					_this.setState({selectedRow: -1});
-					store.dispatch(searchSongs(_this.state.token, _this.state.partyId, searchTerm, _this.state.sid));
+
+					// get token
+
+					firebase.auth().onAuthStateChanged(function(user) {
+		        	if(user) {
+		                // user signed in 
+		                console.log('logged in');
+
+		                user.getIdToken().then(function(token) {
+		                    store.dispatch(searchSongs(token, _this.state.partyId, searchTerm, _this.state.sid));
+		                });
+
+		            }
+		        	});
 
 				}, 500);
 			}

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import firebase from "firebase";
 import {Redirect} from "react-router-dom";
+import Infinite from "react-infinite";
+import MessageItem from "src/app/components/messageitem"
 
 // import css
 import * as styles from "./styles.css";
@@ -13,6 +15,8 @@ import SendMessage from "src/resources/images/main/sendmessage.png";
 // redux
 import store from 'src/app/store';
 
+import {sendMessage} from 'src/app/actions/messagesActions';
+
 export default class Message extends Component {
 
 	constructor(props) {
@@ -23,9 +27,10 @@ export default class Message extends Component {
 		// state initialization
 		this.state = {
 			partyId: store.getState().party.partyId,
+			djId: store.getState().party.djId,
    			token: null,
    			message: "",
-
+   			tableHeight: 1,
    			messages: store.getState().messages.messages
 		};
 	}
@@ -39,7 +44,9 @@ export default class Message extends Component {
 			
         });
 
-        console.log(this.state.messages);
+        // get table height
+		let height = document.getElementById("tableContainer").clientHeight;
+		this.setState({tableHeight: height});
 	}
 
 
@@ -73,7 +80,20 @@ export default class Message extends Component {
 		*/
 
 	onSendMessage(e) {
+		if (this.state.message) {
+			let _this = this;
+			firebase.auth().onAuthStateChanged(function(user) {
+	        	if(user) {
 
+	                user.getIdToken().then(function(token) {
+	                    _this.setState({token: token});
+	    				store.dispatch(sendMessage(token, _this.state.partyId, _this.state.djId, _this.state.message));
+	                });
+
+	            }
+		    });
+			
+		}
 	}
 
 
@@ -85,6 +105,14 @@ export default class Message extends Component {
 
 	render() {
 		if (this.state.partyId >= 0) {
+			this.state.messages.sort(function(left, right) {
+				return left.sent_at > right.sent_at
+			})
+
+			var elements = [];
+			for (var i = 0; i < this.state.messages.length; i++) {
+    			elements.push(<MessageItem key={i} message={this.state.messages[i]} />)
+			}
 
 			return (
 				<div>
@@ -104,6 +132,13 @@ export default class Message extends Component {
 						<div className={`${styles["div-separator"]}`}/>
 
 						<div className={`${styles["div-table"]}`} id="tableContainer">
+							<Infinite 	elementHeight={40}
+										containerHeight={this.state.tableHeight}
+										infiniteLoadBeginEdgeOffset={this.state.tableHeight - 50}
+										isInfiniteLoading={false}
+										>
+								{elements}
+							</Infinite>
 						</div>
 
 						<div className={`${styles["div-messagebox-container"]}`}>

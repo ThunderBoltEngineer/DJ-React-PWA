@@ -2,7 +2,8 @@ const initialState = {
 	messages: [],
 
 	fetching: false,
-	fetched: false,
+	messagesFetched: false,
+	broadcastsFetched: false,
 	error: null
 
 };
@@ -14,24 +15,40 @@ export default function reducer(state = initialState, action){
 		case "FETCH_MESSAGES":
 			return {...state, fetching: true}
 		case "FETCH_MESSAGES_FULFILLED":
-			console.log(action.payload);
-			currentMessages.push(...action.payload.data);
 
-
-			return {...state, fetching: false, messages: currentMessages}
+			if (state.messagesFetched) {
+				return {...state, fetching: false}
+			} else {
+				currentMessages.push(...action.payload.data);
+				return {...state, fetching: false, messagesFetched: true, messages: currentMessages}
+			}
+			
 		case "FETCH_MESSAGES_REJECTED":
 			return {...state, fetching: false}
 
 
 		case "FETCH_BROADCASTS_FULFILLED":
 
-			console.log(action.payload);
-			currentMessages.push(...action.payload.data);
-
-			return {...state, fetching: false, messages: currentMessages}
+			if (state.broadcastsFetched) {
+				return {...state, fetching: false}
+			} else {
+				currentMessages.push(...action.payload.data);
+				return {...state, fetching: false, broadcastsFetched: true, messages: currentMessages}
+			}
 
 		case "FETCH_BROADCASTS_REJECTED":
 			return {...state, fetching: false}
+
+
+		case "SEND_MESSAGE_FULFILLED": 
+			let sentMessage = action.payload.data;
+			currentMessages.push(sentMessage);
+
+			return {...state, messages: currentMessages}
+
+		case "SEND_MESSAGE_REJECTED": 
+			console.log('message sent failure: ' + action.payload);
+			return {...state}
 
 		default:
 			return state;

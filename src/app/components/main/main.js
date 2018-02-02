@@ -52,7 +52,7 @@ export default class Main extends Component {
 			if (this.state.partyId > 0) {
 				let _this = this;
 
-
+				console.log('constructor');
 				firebase.auth().onAuthStateChanged(function(user) {
 	        	if(user) {
 	                // user signed in 

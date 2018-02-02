@@ -1,0 +1,34 @@
+.div-container {
+	margin-top: 20px;
+	width: 100%;
+	height: 50px;
+	
+}
+
+.div-time {
+	width: 100%;
+	height: 30px;
+	padding-bottom: 10px;
+
+	font-weight: lighter;
+	color: #DEBDC2;
+}
+
+.div-time p {
+	line-height: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.div-message {
+	width: 100%;
+	height: 20px;
+
+	color: white;	
+}
+
+.div-message p{
+	line-height: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+}

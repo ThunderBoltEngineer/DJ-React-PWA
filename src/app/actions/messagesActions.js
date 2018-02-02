@@ -34,3 +34,20 @@ export function fetchBroadcasts(token, partyId) {
 
   }
 }
+
+export function sendMessage(token, partyId, djId, message) {
+
+  return function(dispatch) {
+
+        return axios({
+              method: 'post',
+              url: baseUrl + apiUrl + partyId + '/djs/' + djId + '/messages',
+              headers: {'Authorization': 'Bearer ' + token},
+              params: { body: message }
+
+        }).then(response => dispatch({type: 'SEND_MESSAGE_FULFILLED', payload: response.data}),
+            error => dispatch({type: 'SEND_MESSAGE_REJECTED', payload: error})
+            );
+
+  }
+}
