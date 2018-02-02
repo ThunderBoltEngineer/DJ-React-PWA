@@ -23,9 +23,12 @@ import Chat from "src/resources/images/main/chat.png";
 // redux
 import store from 'src/app/store';
 import {fetchRecentlyPlayedSongs} from 'src/app/actions/recentlyPlayedSongsActions';
+import {fetchMessages, fetchBroadcasts} from 'src/app/actions/messagesActions';
 import {voteSong} from 'src/app/actions/voteSongActions';
 import {logout} from 'src/app/actions/logoutActions';
 //
+
+
 
 export default class Main extends Component {
 
@@ -38,10 +41,34 @@ export default class Main extends Component {
    			// state initialization
    			this.state = {
    				partyId: store.getState().party.partyId,
+   				djId: store.getState().party.djId,
    				recentPlayList: store.getState().recentlyPlayedSongs.data,
    				currentIndex: 0,
    				sidebarOpen: false
    				};
+
+
+   			// if user has joined party, fetch recently played song list
+			if (this.state.partyId > 0) {
+				let _this = this;
+
+
+				firebase.auth().onAuthStateChanged(function(user) {
+	        	if(user) {
+	                // user signed in 
+	                console.log('logged in');
+
+	                user.getIdToken().then(function(token) {
+	                    _this.setState({token: token});
+	    				store.dispatch(fetchRecentlyPlayedSongs(token, _this.state.partyId, store.getState().party.partyId));
+	    				
+	    				store.dispatch(fetchMessages(token, _this.state.partyId, _this.state.djId));
+	    				store.dispatch(fetchBroadcasts(token, _this.state.partyId));
+	                });
+
+	            }
+	        });
+			}
 
 		}
 
@@ -55,29 +82,6 @@ export default class Main extends Component {
                   	partyId: store.getState().party.partyId
                   });
             });
-
-
-
-
-			// if user has joined party, fetch recently played song list
-			if (this.state.partyId > 0) {
-				let _this = this;
-
-
-				firebase.auth().onAuthStateChanged(function(user) {
-	        	if(user) {
-	                // user signed in 
-	                console.log('logged in');
-
-	                user.getIdToken().then(function(token) {
-	                    _this.setState({token: token});
-	    				store.dispatch(fetchRecentlyPlayedSongs(token, _this.state.partyId, store.getState().party.partyId));
-	                });
-
-	            }
-	        });
-			}
-			
 		}
 
 		componentWillUnmount() {

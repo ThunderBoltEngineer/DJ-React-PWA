@@ -45,3 +45,63 @@
 	font-size: 16px;
 	color: #DEBDC2;
 }
+
+
+.div-dj-name {
+	margin-top: 1%;
+	width: 100%;
+	height: 5%;
+}
+
+.div-dj-name p {
+	position: relative;
+	left: 50%;
+	top: 50%;
+
+	transform: translateX(-50%) translateY(-50%);
+	text-align: center;
+	font-size: 14px;
+	color: #E5BF66;
+}
+
+.div-separator {
+	width: 100%;
+	height: 2px;
+	background-color: #E5BF66;
+}
+
+.div-table {
+	width: 100%;
+	height: 71%;
+}
+
+.div-messagebox-container {
+	width: 100%;
+	height: 12%;
+	padding: 20px;
+	max-height: 100px;
+}
+
+.div-messagebox {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.input-message {
+	width: 100%;
+	height: 100%;
+	padding-left: 10px;
+}
+
+.img-message {
+	position: absolute;
+	right: 5px;
+	height: 80%;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.img-message:active {
+	opacity: .3;
+}

@@ -17,6 +17,7 @@ const firebaseConfig = config.config;
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth; 
+const messaging = firebase.messaging();
 
 // redux
 
@@ -32,6 +33,7 @@ export default class Login extends Component {
             super(props);
 
             this.signInAnonymously = this.signInAnonymously.bind(this);
+            this.requestFCMPermission = this.requestFCMPermission.bind(this);
 
             this.state = {
                   partyCode: props.match.params.code,
@@ -57,10 +59,27 @@ export default class Login extends Component {
             if(this.state.joining) {
                   this.signInAnonymously();
             }
+
+            this.requestFCMPermission();
       }
 
       componentWillUnmount() {
             this.unsubscribe();
+      }
+
+      /*
+            request messaging permission
+
+            */
+
+      requestFCMPermission = () => {
+            messaging.requestPermission()
+            .then(function() {
+                  console.log('Notification Permission Granted');
+            })
+            .catch(function(err) {
+                  console.log('Unabled to get permission to notify ' + err);
+            });
       }
 
 
