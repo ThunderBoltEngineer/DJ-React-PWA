@@ -48,7 +48,20 @@ export default class Main extends Component {
    				};
 
 
-   			// if user has joined party, fetch recently played song list
+		}
+
+		componentDidMount() {
+
+			//connect to store
+			this.unsubscribe = store.subscribe(()=>{
+                  console.log('subscribe on mainpage');
+                  this.setState({
+                  	recentPlayList: store.getState().recentlyPlayedSongs.data,
+                  	partyId: store.getState().party.partyId
+                  });
+            });
+
+            // if user has joined party, fetch recently played song list
 			if (this.state.partyId > 0) {
 				let _this = this;
 
@@ -70,18 +83,10 @@ export default class Main extends Component {
 	        });
 			}
 
-		}
 
-		componentDidMount() {
-
-			//connect to store
-			this.unsubscribe = store.subscribe(()=>{
-                  console.log('subscribe on mainpage');
-                  this.setState({
-                  	recentPlayList: store.getState().recentlyPlayedSongs.data,
-                  	partyId: store.getState().party.partyId
-                  });
-            });
+			firebase.messaging().getToken().then(function(currentToken) {
+				console.log(currentToken);
+			});
 		}
 
 		componentWillUnmount() {

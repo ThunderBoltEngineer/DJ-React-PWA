@@ -64,17 +64,21 @@ export default class Request extends Component {
 		*/
 
 	onSendRequest(e) {
-		let _this = this;
-		firebase.auth().onAuthStateChanged(function(user) {
-        	if(user) {
 
-                user.getIdToken().then(function(token) {
-                    _this.setState({token: token});
-    				store.dispatch(sendRequest(token, _this.state.partyId, _this.state.song, _this.state.message));
-                });
+		if(this.state.message) {
+			let _this = this;
+			firebase.auth().onAuthStateChanged(function(user) {
+	        	if(user) {
 
-            }
-	    });
+	                user.getIdToken().then(function(token) {
+	                    _this.setState({token: token});
+	    				store.dispatch(sendRequest(token, _this.state.partyId, _this.state.song, _this.state.message));
+	                });
+
+	            }
+		    });
+		}
+		
 	}
 
 

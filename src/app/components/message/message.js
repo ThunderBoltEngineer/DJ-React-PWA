@@ -29,7 +29,6 @@ export default class Message extends Component {
 			partyId: store.getState().party.partyId,
 			djId: store.getState().party.djId,
    			token: null,
-   			message: "",
    			tableHeight: 1,
    			messages: store.getState().messages.messages
 		};
@@ -39,8 +38,8 @@ export default class Message extends Component {
 	componentDidMount() {
 		//connect to store
 		this.unsubscribe = store.subscribe(()=>{
-			this.setState({messages: store.getState().messages.messages});
 
+			this.setState({messages: store.getState().messages.messages});
 			
         });
 
@@ -66,28 +65,20 @@ export default class Message extends Component {
 
 
 	/*
-		message input event
-
-		*/
-
-	onMessageChanged(e) {
-		this.setState({message: e.target.value});
-	}
-
-	/*
 		send message
 
 		*/
 
 	onSendMessage(e) {
-		if (this.state.message) {
+		let message = document.getElementById("message").value;
+		if (message) {
 			let _this = this;
 			firebase.auth().onAuthStateChanged(function(user) {
 	        	if(user) {
 
 	                user.getIdToken().then(function(token) {
 	                    _this.setState({token: token});
-	    				store.dispatch(sendMessage(token, _this.state.partyId, _this.state.djId, _this.state.message));
+	    				store.dispatch(sendMessage(token, _this.state.partyId, _this.state.djId, message));
 	                });
 
 	            }
@@ -143,7 +134,7 @@ export default class Message extends Component {
 
 						<div className={`${styles["div-messagebox-container"]}`}>
 							<div className={`${styles["div-messagebox"]}`}>
-								<input type="text" placeholder="Your Message" className={`${styles["input-message"]}`} defaultValue={this.state.message} onChange={this.onMessageChanged.bind(this)}/>
+								<input id="message"  type="text" placeholder="Your Message" className={`${styles["input-message"]}`}/>
 								<img src={SendMessage} alt="send" className="img-responsive" className={`${styles["img-message"]}`} onClick={this.onSendMessage.bind(this)}/>
 							</div>
 						</div>

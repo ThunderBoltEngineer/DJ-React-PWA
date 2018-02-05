@@ -171,15 +171,40 @@ export default class Search extends Component {
 			*/
 
 		handleFBLogin(e) {
-			this.signInWithProvider(fbAuthProvider);
+			let _this = this;
+
+			firebase.auth().signOut().then(function() {
+
+				_this.signInWithProvider(fbAuthProvider);
+
+			}).catch(function(error) {
+				console.log('log out error');
+			});
+			
 		}
 
 		handleTwitterLogin(e) {
-			this.signInWithProvider(twitterAuthProvider);
+			let _this = this;
+
+			firebase.auth().signOut().then(function() {
+
+				_this.signInWithProvider(twitterAuthProvider);
+
+			}).catch(function(error) {
+				console.log('log out error');
+			});
 		}
 
 		handleGooglePlusLogin(e) {
-			this.signInWithProvider(googleAuthProvider);
+			let _this = this;
+
+			firebase.auth().signOut().then(function() {
+
+				_this.signInWithProvider(googleAuthProvider);
+
+			}).catch(function(error) {
+				console.log('log out error');
+			});
 		}
 
 		handleClose(e) {

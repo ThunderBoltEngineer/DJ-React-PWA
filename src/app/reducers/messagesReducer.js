@@ -20,6 +20,12 @@ export default function reducer(state = initialState, action){
 				return {...state, fetching: false}
 			} else {
 				currentMessages.push(...action.payload.data);
+
+				currentMessages.sort(function(left, right) {
+				left.sent_at < right.sent_at
+				});
+
+
 				return {...state, fetching: false, messagesFetched: true, messages: currentMessages}
 			}
 			
@@ -28,6 +34,9 @@ export default function reducer(state = initialState, action){
 
 
 		case "FETCH_BROADCASTS_FULFILLED":
+			currentMessages.sort(function(left, right) {
+				left.sent_at < right.sent_at
+			});
 
 			if (state.broadcastsFetched) {
 				return {...state, fetching: false}
@@ -43,6 +52,7 @@ export default function reducer(state = initialState, action){
 		case "SEND_MESSAGE_FULFILLED": 
 			let sentMessage = action.payload.data;
 			currentMessages.push(sentMessage);
+
 
 			return {...state, messages: currentMessages}
 
