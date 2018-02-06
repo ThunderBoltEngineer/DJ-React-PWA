@@ -25,7 +25,6 @@ export default class Request extends Component {
 		// state initialization
 		this.state = {
 			partyId: store.getState().party.partyId,
-   			token: null,
    			index: this.props.match.params.index,
    			song: store.getState().searchSongs.matches[this.props.match.params.index],
    			message: "",
@@ -71,7 +70,7 @@ export default class Request extends Component {
 	        	if(user) {
 
 	                user.getIdToken().then(function(token) {
-	                    _this.setState({token: token});
+	                	console.log(token);
 	    				store.dispatch(sendRequest(token, _this.state.partyId, _this.state.song, _this.state.message));
 	                });
 

@@ -171,40 +171,16 @@ export default class Search extends Component {
 			*/
 
 		handleFBLogin(e) {
-			let _this = this;
 
-			firebase.auth().signOut().then(function() {
-
-				_this.signInWithProvider(fbAuthProvider);
-
-			}).catch(function(error) {
-				console.log('log out error');
-			});
-			
+			this.signInWithProvider(fbAuthProvider);
 		}
 
 		handleTwitterLogin(e) {
-			let _this = this;
-
-			firebase.auth().signOut().then(function() {
-
-				_this.signInWithProvider(twitterAuthProvider);
-
-			}).catch(function(error) {
-				console.log('log out error');
-			});
+			this.signInWithProvider(twitterAuthProvider);
 		}
 
 		handleGooglePlusLogin(e) {
-			let _this = this;
-
-			firebase.auth().signOut().then(function() {
-
-				_this.signInWithProvider(googleAuthProvider);
-
-			}).catch(function(error) {
-				console.log('log out error');
-			});
+			this.signInWithProvider(googleAuthProvider);
 		}
 
 		handleClose(e) {
@@ -219,21 +195,32 @@ export default class Search extends Component {
 		signInWithProvider = (provider) => {
 
 		    let _this = this;
+		    var prevUser =  firebase.auth().currentUser;
 
 		    firebase.auth().signInWithPopup(provider).then(function(result) {
+		    	var currentUser = result.user;
 
-				_this.setState({modalIsOpen: false});
+		    	return result.user.delete().then(function() {
+		    		console.log('deleted');
+		    		return prevUser.linkWithPopup(provider);
+		    	}).then(function() {
+		    		console.log('linked');
+		    		return firebase.auth().signInWithPopup(provider);
+		    	}).then(function(result) {
+		    		firebase.auth().onAuthStateChanged(function(user) {
+			        	if(user) {
+			                // user signed in 
+			                user.getIdToken().then(function(token) {
+			                    _this.props.history.push('/main/search/request/' + _this.state.selectedRow);
+			                });
 
-				_this.props.history.push('/main/search/request/' + _this.state.selectedRow);   
-
+			            }
+			        });
+		    	});
 		    }).catch(function(error) {
-		          alert('authentication failed');
-		          // output error message
-		          var errorMessage = error.message;
-		          console.log(errorMessage);
-
-		          _this.setState({modalIsOpen: false});
+		    	console.log(error);
 		    });
+
 		}
 
 

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-let baseUrl = "https://api-next.spinfluence.live/api/v1";
+let baseUrl = "https://api-test.spinfluence.live/api/v1";
 let apiUrl = "/parties/";
 
 export function fetchRecentlyPlayedSongs(token, partyId) {
