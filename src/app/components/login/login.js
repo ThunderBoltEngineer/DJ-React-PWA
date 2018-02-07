@@ -16,9 +16,6 @@ const firebaseConfig = config.config;
 // configure firebase 
 firebase.initializeApp(firebaseConfig);
 
-const auth = firebase.auth; 
-const messaging = firebase.messaging();
-
 // redux
 
 import store from 'src/app/store';
@@ -47,6 +44,10 @@ export default class Login extends Component {
                   
                   console.log('subscribe');
 
+                  if (this.state.party.paid) {
+                        alert('this is paid party');
+                  }
+
 
                   // navigate to main page
                   this.setState({joining: false});
@@ -73,7 +74,7 @@ export default class Login extends Component {
             */
 
       requestFCMPermission = () => {
-            messaging.requestPermission()
+            firebase.messaging().requestPermission()
             .then(function() {
                   console.log('Notification Permission Granted');
             })
