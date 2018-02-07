@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {Redirect} from "react-router-dom";
-import firebase from "firebase";
+import firebase from 'firebase';
 
 // import css
 import * as styles from "./styles.css";

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import firebase from "firebase";
 import {Redirect} from "react-router-dom";
 import Infinite from "react-infinite";
-import MessageItem from "src/app/components/messageitem"
+import MessageItem from "src/app/components/messageitem";
+import firebase from 'firebase';
 
 // import css
 import * as styles from "./styles.css";

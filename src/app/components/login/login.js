@@ -9,12 +9,12 @@ import * as styles from "./styles.css";
 import LoginBackground from "src/resources/images/login/bg.png";
 
 // import firebase configuration info
-import config from "src/config/firebase_config.js";
-const firebaseConfig = config.config;
+// import config from "src/config/firebase_config.js";
+// const firebaseConfig = config.config;
 
 
-// configure firebase 
-firebase.initializeApp(firebaseConfig);
+// // configure firebase 
+// firebase.initializeApp(firebaseConfig);
 
 // redux
 
@@ -74,13 +74,13 @@ export default class Login extends Component {
             */
 
       requestFCMPermission = () => {
-            firebase.messaging().requestPermission()
-            .then(function() {
-                  console.log('Notification Permission Granted');
-            })
-            .catch(function(err) {
-                  console.log('Unabled to get permission to notify ' + err);
-            });
+            // firebase.messaging().requestPermission()
+            // .then(function() {
+            //       console.log('Notification Permission Granted');
+            // })
+            // .catch(function(err) {
+            //       console.log('Unabled to get permission to notify ' + err);
+            // });
       }
 
 

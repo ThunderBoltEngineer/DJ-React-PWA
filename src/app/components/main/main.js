@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import firebase from "firebase";
 import {Redirect} from "react-router-dom";
 import Sidebar from 'react-sidebar';
-
+import firebase from 'firebase';
 import Carousel from "src/app/components/carousel";
 
 
@@ -83,10 +82,6 @@ export default class Main extends Component {
 	        });
 			}
 
-
-			firebase.messaging().getToken().then(function(currentToken) {
-				console.log(currentToken);
-			});
 		}
 
 		componentWillUnmount() {

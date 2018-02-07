@@ -1,5 +1,10 @@
 import React, {Component} from "react";
-import SlickCarousel from "react-slick";
+
+/* Production Mode */
+//import Slick from "src/app/components/slick";
+
+/* Development Mode */
+import Slick from "react-slick";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -55,9 +60,9 @@ export default class Carousel extends Component {
 			
 		
 			<div className={`${styles["carousel-container"]}`}>
-				<SlickCarousel {...settings}>
+				<Slick {...settings}>
 					{carouselContent}
-				</SlickCarousel>
+				</Slick>
 			</div>
 
 		);
