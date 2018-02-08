@@ -46,6 +46,8 @@ export default class Main extends Component {
    				sidebarOpen: false
    				};
 
+   			console.log('main constructor');
+
 
 		}
 
@@ -192,6 +194,8 @@ export default class Main extends Component {
 			*/
 
 		render() {
+			console.log('party Id: ' + this.state.partyId);
+
 			if (this.state.partyId >= 0) {
 				var sidebarContent = (
 					<b>
